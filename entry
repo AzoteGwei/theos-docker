@@ -1,11 +1,25 @@
 #!/bin/bash
+set -e
 
-sudo mount --bind ~/toolchain ~/theos/toolchain
+THEOS_DIR="$HOME/theos"
+TOOLCHAIN_DIR="$HOME/toolchain"
 
-cp -an /container_init_template ~/work/container_init
-if mkdir ~/.container_init_done 2>/dev/null; then
-    # perform initial container init
-    ~/work/container_init
+if [ -d "$TOOLCHAIN_DIR/linux/iphone" ] && [ ! -L "$THEOS_DIR/toolchain" ]; then
+    rm -rf "$THEOS_DIR/toolchain"
+    ln -sf "$TOOLCHAIN_DIR" "$THEOS_DIR/toolchain"
 fi
 
-cd ~/work && bash -l || :
+INIT_MARKER="$HOME/.container_init_done"
+INIT_SRC="/home/me/container_init_template"
+INIT_DST="$HOME/work/container_init"
+
+if [ ! -d "$INIT_MARKER" ]; then
+    mkdir -p "$INIT_MARKER"
+    if [ -f "$INIT_SRC" ]; then
+        cp -an "$INIT_SRC" "$INIT_DST"
+        [ -x "$INIT_DST" ] && "$INIT_DST"
+    fi
+fi
+
+cd "$HOME/work"
+exec bash -l

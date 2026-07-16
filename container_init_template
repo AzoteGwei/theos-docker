@@ -4,9 +4,19 @@
 # is started. Use it to perform initial container setup
 # actions, such as configuring dotfiles.
 
-sudo apt-get update
+cat << 'EOF'
+╔══════════════════════════════════════════════════════════════╗
+║                   Theos 22.04 Dev Container                 ║
+║                                                              ║
+║  Theos: $THEOS/theos                                         ║
+║  SDKs:  $THEOS/sdks                                          ║
+║  Work:  ~/work                                               ║
+║                                                              ║
+║  Start a new tweak project:                                  ║
+║    $ nic.pl                                                  ║
+╚══════════════════════════════════════════════════════════════╝
+EOF
 
-# echo '. ~/work/.bash_profile' >> ~/.bash_profile
-# ln -s ~/work/.nicrc ~/.nicrc
-# ln -s ~/work/.theosrc ~/.theosrc
-# ln -s ~/work/.ssh ~/.ssh
+# ln -sf ~/work/.bashrc ~/.bashrc
+# ln -sf ~/work/.gitconfig ~/.gitconfig
+# ln -sf ~/work/.ssh ~/.ssh

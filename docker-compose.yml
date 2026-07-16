@@ -1,16 +1,16 @@
-version: '3.8'
 services:
   theos:
     build:
       context: .
-    volumes:
-      - ./theos:/home/me/theos
-      - ./sdks:/home/me/theos/sdks
-      - work:/home/me/work
-    privileged: true
-    network_mode: host
+      args:
+        - CHANGE_SOURCE=false
+    image: theos:22.04
     container_name: theos
+    volumes:
+      - theos-data:/home/me/theos:Z
+      - theos-work:/home/me/work:Z
     stdin_open: true
     tty: true
 volumes:
-  work:
+  theos-data:
+  theos-work:
