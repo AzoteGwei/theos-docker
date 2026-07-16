@@ -3,6 +3,9 @@ FROM ubuntu:22.04
 
 LABEL maintainer="theos-community"
 LABEL description="Theos build environment for iOS jailbreak tweak development"
+LABEL org.opencontainers.image.source=https://github.com/azotegwei/theos-docker
+LABEL org.opencontainers.image.description="Theos build environment for iOS jailbreak tweak development"
+LABEL org.opencontainers.image.licenses=MIT
 
 ARG CHANGE_SOURCE=false
 
