@@ -48,7 +48,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=tag
-            type=raw,value=latest
 
       - name: Build and push by digest
         id: build
@@ -103,13 +102,12 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=tag
-            type=raw,value=latest
 
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
           docker buildx imagetools create $(jq -cr '.tags[] | ["--tag " + .] | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' *)
+            $(for f in *; do printf '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:%s ' "${f#digest-}"; done)
 
       - name: Inspect image
         run: |
